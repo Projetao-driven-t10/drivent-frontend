@@ -9,6 +9,7 @@ import Option from './Option';
 export default function Payment() {
   const token = useToken();
   const [ticketsType, setTicketsType] = React.useState([]);
+  const [typeSelected, setTypeSelected] = React.useState({ name: '', price: '' });
   const { data: enrollmentData, getEnrollmentLoading } = useGetEnrollment();
   const [savedEnrollment, setSavedEnrollment] = React.useState(enrollmentData ? true : false);
 
@@ -33,9 +34,9 @@ export default function Payment() {
     <>
       <PaymentPage isAllowed={savedEnrollment}>
         <Title>Ingresso e Pagamento</Title>
-        <Description>Primeiro, escolha sua modalidade de ingresso</Description>
+        <Description includesHotel={true}>Primeiro, escolha sua modalidade de ingresso</Description>
         
-        <OpetionContainer>
+        <OpetionContainer includesHotel={true}>
           {ticketsType.map(({ id, name, includesHotel, isRemote, price }) => {
             return (
               <Option key={id} 
@@ -43,14 +44,16 @@ export default function Payment() {
                 includesHotel={includesHotel}
                 isRemote={isRemote}
                 price={price}
+                setTypeSelected={setTypeSelected}
+                selected={(name === typeSelected.name)}
               ></Option>
             );
           })}
         </OpetionContainer>
         
         {/* Aparecer somente em caso de tipo de Hospedagem === Presencial */}
-        <Description>Ótimo! Agora escolha sua modalidade de Hospedagem</Description>
-        <OpetionContainer>
+        <Description includesHotel={typeSelected.includesHotel}>Ótimo! Agora escolha sua modalidade de Hospedagem</Description>
+        <OpetionContainer includesHotel={typeSelected.includesHotel}>
           <OptionBox>
             <OptionType>Sem hotel</OptionType>
             <OpetionPrice>+ R$ 0</OpetionPrice>

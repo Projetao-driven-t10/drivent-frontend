@@ -30,6 +30,7 @@ export const Description = styled.p`
   text-align: left;
   color: #8E8E8E;
   margin-top: 30px;
+  display: ${(props) => props.includesHotel ? 'init' : 'none'};
 `;
 
 export const OptionBox = styled.div`
@@ -44,7 +45,7 @@ export const OptionBox = styled.div`
   justify-content: center;
   align-items: center;
   // recebe props
-  background-color: #FFEED2;
+  background-color: ${(props) => props.selectedBackground ? '#FFEED2' : 'white'};
 `;
 
 export const OptionType = styled.p`
@@ -75,6 +76,7 @@ export const OpetionContainer = styled.div`
     width: auto;
     height: auto;
     display: flex;
+    display: ${(props) => props.includesHotel ? 'init' : 'none'};
 `;
 
 export const ConfirmButton = styled.button`
