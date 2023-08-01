@@ -4,6 +4,7 @@ export const PaymentPage = styled.div`
   padding: 15px;
   width: 100%;
   height: 100%;
+  display: ${(props) => props.isAllowed ? '' : 'none'};
 `;
 
 export const Title = styled.h1`
@@ -90,4 +91,19 @@ export const ConfirmButton = styled.button`
     color: #000000;
     margin-top: 12px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+`;
+
+export const NonAvailablePage = styled.div`
+    width: 100%;
+    height: 100%;
+    display: ${(props) => !props.isAllowed ? 'flex' : 'none'};
+    justify-content: center;
+    align-items: center;
+
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: center;
 `;
