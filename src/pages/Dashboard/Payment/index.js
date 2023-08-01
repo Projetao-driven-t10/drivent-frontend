@@ -2,22 +2,27 @@ import React, { useEffect } from 'react';
 import { PaymentPage, Title, Description, OptionBox, OptionType, OpetionPrice, OpetionContainer, ConfirmButton, NonAvailablePage } from './style';
 
 import useGetEnrollment from '../../../hooks/api/useGetEnrollment';
-import useTicketType from '../../../hooks/api/useTicketType';
+import { ticketTypeApi } from '../../../services/ticketTypeApi';
+import useToken from '../../../hooks/useToken';
+import Option from './Option';
 
 export default function Payment() {
-  const { data: ticketTypeData, ticketTypeLoading } = useTicketType();
+  const token = useToken();
+  const [ticketsType, setTicketsType] = React.useState([]);
   const { data: enrollmentData, getEnrollmentLoading } = useGetEnrollment();
   const [savedEnrollment, setSavedEnrollment] = React.useState(enrollmentData ? true : false);
 
   useEffect(() => {
     // info data sobre enrollment check
-    console.log(ticketTypeData);
-
     if(enrollmentData) {
       setSavedEnrollment(true);
     }else {
       setSavedEnrollment(false);
     }
+    // requisicao para API
+    ticketTypeApi(token)
+      .then((data) => setTicketsType(data))
+      .catch((err) => console.log(err));
   }, [getEnrollmentLoading]);
 
   // utiliza verificação da funcao assincrona para
@@ -29,16 +34,20 @@ export default function Payment() {
       <PaymentPage isAllowed={savedEnrollment}>
         <Title>Ingresso e Pagamento</Title>
         <Description>Primeiro, escolha sua modalidade de ingresso</Description>
+        
         <OpetionContainer>
-          <OptionBox>
-            <OptionType>Presencial</OptionType>
-            <OpetionPrice>R$ 250</OpetionPrice>
-          </OptionBox>
-          <OptionBox>
-            <OptionType>Presencial</OptionType>
-            <OpetionPrice>R$ 250</OpetionPrice>
-          </OptionBox>
+          {ticketsType.map(({ id, name, includesHotel, isRemote, price }) => {
+            return (
+              <Option key={id} 
+                name={name} 
+                includesHotel={includesHotel}
+                isRemote={isRemote}
+                price={price}
+              ></Option>
+            );
+          })}
         </OpetionContainer>
+        
         {/* Aparecer somente em caso de tipo de Hospedagem === Presencial */}
         <Description>Ótimo! Agora escolha sua modalidade de Hospedagem</Description>
         <OpetionContainer>
