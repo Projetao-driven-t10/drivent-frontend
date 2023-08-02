@@ -8,7 +8,7 @@ export const PaymentPage = styled.div`
 `;
 
 export const Title = styled.h1`
-  width: 338px;
+  width: 438px;
   height: 40px;
   font-family: Roboto;
   font-size: 34px;
@@ -20,7 +20,7 @@ export const Title = styled.h1`
 `;
 
 export const Description = styled.p`
-  width: 479px;
+  width: 600px;
   height: 23px;
   font-family: Roboto;
   font-size: 20px;
@@ -49,7 +49,7 @@ export const OptionBox = styled.div`
 `;
 
 export const OptionType = styled.p`
-  width: 75px;
+  width: 125px;
   height: 19px;
   font-family: Roboto;
   font-size: 16px;
@@ -60,7 +60,7 @@ export const OptionType = styled.p`
 `;
 
 export const OpetionPrice = styled.p`
-  width: 64px;
+  width: 94px;
   height: 16px;
   font-family: Roboto;
   font-size: 14px;
