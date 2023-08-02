@@ -60,7 +60,7 @@ export const OptionType = styled.p`
 `;
 
 export const OpetionPrice = styled.p`
-  width: 44px;
+  width: 64px;
   height: 16px;
   font-family: Roboto;
   font-size: 14px;
@@ -92,6 +92,7 @@ export const ConfirmButton = styled.button`
     text-align: center;
     color: #000000;
     margin-top: 12px;
+    display: ${(props) => props.includesHotel ? 'init' : 'none'};
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
 `;
 
