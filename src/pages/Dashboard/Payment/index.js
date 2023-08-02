@@ -9,13 +9,13 @@ import Option from './Option';
 export default function Payment() {
   const token = useToken();
   const [ticketsType, setTicketsType] = React.useState([]);
-  const [typeSelected, setTypeSelected] = React.useState({ name: '', price: '', includesHotel: false });
+  const [typeSelected, setTypeSelected] = React.useState({ name: '', price: '', includesHotel: false, isRemote: false });
   const [hotelSelected, setHotelSelected] = React.useState({ name: '', price: '' });
   const { data: enrollmentData, getEnrollmentLoading } = useGetEnrollment();
   const [savedEnrollment, setSavedEnrollment] = React.useState(enrollmentData ? true : false);
 
   function calculateFinalPrice() {
-    if(typeSelected.name !== 'Online') return Number(typeSelected.price) + Number(hotelSelected.price);  
+    if(typeSelected.isRemote) return Number(typeSelected.price) + Number(hotelSelected.price);  
     return typeSelected.price;
   }
 
