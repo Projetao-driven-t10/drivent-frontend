@@ -72,8 +72,8 @@ export default function Payment() {
             <OpetionPrice>+ R$ 250</OpetionPrice>
           </OptionBox>
         </OpetionContainer>
-        <Description includesHotel={hotelSelected.name !== '' || typeSelected.name === 'Online'}>Fechado! O total ficou em <strong>R$ {calculateFinalPrice()}</strong>. Agora é só confirmar!</Description>
-        <ConfirmButton includesHotel={hotelSelected.name !== '' || typeSelected.name === 'Online'}>RERSERVAR INGRESSO</ConfirmButton>
+        <Description includesHotel={hotelSelected.name !== '' || typeSelected.isRemote }>Fechado! O total ficou em <strong>R$ {calculateFinalPrice()}</strong>. Agora é só confirmar!</Description>
+        <ConfirmButton includesHotel={hotelSelected.name !== '' || typeSelected.isRemote }>RERSERVAR INGRESSO</ConfirmButton>
       </PaymentPage>
       <NonAvailablePage isAllowed={savedEnrollment}>Voce precisa completar sua incrição antes de prosseguir pra escolha de ingresso</NonAvailablePage>
     </>
