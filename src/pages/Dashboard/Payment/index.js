@@ -15,7 +15,7 @@ export default function Payment() {
   const [savedEnrollment, setSavedEnrollment] = React.useState(enrollmentData ? true : false);
 
   function calculateFinalPrice() {
-    if(typeSelected.isRemote) return Number(typeSelected.price) + Number(hotelSelected.price);  
+    if(!typeSelected.isRemote) return Number(typeSelected.price) + Number(hotelSelected.price);  
     return typeSelected.price;
   }
 
