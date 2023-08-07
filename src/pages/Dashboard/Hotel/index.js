@@ -1,16 +1,32 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useHotel from '../../../hooks/api/useHotel';
+import { Title, Subtitle, CardConteiner } from './style';
 export default function Hotel() {
-  const [hotel, setHotel] = useState([]);
-  const { hotels } = useHotel();
+  const [hotels, setHotels] = useState([]);
+  const [error, setError] = useState(null);
+  const { hotel, hotelLoading, hotelError } = useHotel();
   useEffect(() => {
-    if (hotels) {
-      setHotel(hotels);
-    //  console.log(hotels);
+    if (hotel) {
+      setHotels(hotel);
+      console.log(hotels);
     }
-  }, []);
-
+    else{
+      setError(hotelError);
+    }
+  }, [hotelLoading]);
+  if(hotelLoading) return <></>;
+  if(error === 'Not Found') return (
+    <>
+      <Title>Escolha de hotel e quarto</Title>
+      <p>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem</p>
+    </>);
+  if(error === 'Payment Required') return (
+    <>
+      <Title>Escolha de hotel e quarto</Title>
+      <p>Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades</p>
+    </>
+  );
   return (
     <>
       <Title>Escolha de hotel e quarto</Title>
@@ -24,41 +40,10 @@ export default function Hotel() {
           <p>Vagas disponíveis:</p>
           <span>103</span>
         </Card>
-        <Card>
-          <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcl7wnKXlkPujvGtuCFKDJgMrbocSfVqJURg&usqp=CAU' alt='hotel' />
-          <h6>Nome do hotel</h6>
-          <p>Tipos de acomodação:</p>
-          <span>Single e Double</span>
-          <p>Vagas disponíveis:</p>
-          <span>103</span>
-        </Card>
-        <Card>
-          <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcl7wnKXlkPujvGtuCFKDJgMrbocSfVqJURg&usqp=CAU' alt='hotel' />
-          <h6>Nome do hotel</h6>
-          <p>Tipos de acomodação:</p>
-          <span>Single e Double</span>
-          <p>Vagas disponíveis:</p>
-          <span>103</span>
-        </Card>
       </CardConteiner>
     </>);
 };
 
-const Title = styled.h4`
-font-family: 'Roboto', sans-serif;
-font-weight: 400;
-font-size: 2rem;
-`;
-const Subtitle = styled.h6`
-font-family: 'Roboto', sans-serif;
-font-weight: 400;
-font-size: 1.2rem;
-color: #8e8e8e;
-margin-top: 2.2rem;
-`;
-const CardConteiner = styled.div`
-display: flex;
-`;
 const Card = styled.div`
 width: 12.25rem;
 height: 16.5rem;
