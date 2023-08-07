@@ -11,6 +11,7 @@ import Input from '../../../components/Form/Input';
 import { toast } from 'react-toastify';
 import { makePayment, reserveTicket } from '../../../services/paymentApi';
 export default function Payment() {
+  const [ticketReserved, setTicketReserved] = React.useState({});
   const token = useToken();
   const [ticketsType, setTicketsType] = React.useState([]);
   const [typeSelected, setTypeSelected] = React.useState({ id: '', name: '', price: '', includesHotel: false, isRemote: false });
@@ -87,8 +88,8 @@ export default function Payment() {
             onClick={() => {
               setShow('ingresso escolhido');
               console.log(typeSelected.id);
-              reserveTicket({ ticketTypeId: typeSelected.id }, token)
-                .then(data => console.log(data))
+              reserveTicket({ ticketTypeId: typeSelected.id }, token) 
+                .then(data => setTicketReserved(data))
                 .catch((err) => console.log(err));
             }}>RERSERVAR INGRESSO</ConfirmButton>
         </Container>
@@ -149,7 +150,7 @@ export default function Payment() {
         </ContainerB>
         <Button show={show} onClick={() => {
           const body = {
-            ticketId: typeSelected.id,
+            ticketId: ticketReserved.id,
             cardData: {
               issuer: data.issuer,
               number: data.cardNumber,
