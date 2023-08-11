@@ -9,8 +9,11 @@ const weekDays = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', '
 
 export default function Button({ day, setActivitiesByDay, id, token }) {
   const [dayOfButton, setDay] = React.useState(day);
-  const [weekPosition, setWeekPosition] = React.useState(new Date(day).getDay());
-  const [dateDay, setDateDay] = React.useState(dayjs(day).format('DD/MM'));
+  const formatedDay = (new Date(day));
+  const formatedMonth = dayjs(day).format('MM');
+  const formatedYear = dayjs(day).format('YYYY');
+  const [weekPosition, setWeekPosition] = React.useState((new Date(`${formatedYear}-${formatedMonth}-${formatedDay.getDate() + 2}`).getDay()));
+  const [dateDay, setDateDay] = React.useState(`${formatedDay.getDate() + 1}/${formatedMonth}`);
 
   function getActivitiesByDay() {
     api.get(`/activities/${dayOfButton}`, {
