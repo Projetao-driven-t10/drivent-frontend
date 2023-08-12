@@ -19,6 +19,7 @@ export async function makePayment(body, token) {
 
   return response.data;
 }
+
 // export async function getPersonalInformations(token) {
 // const response = await api.get('/enrollments', {
 //     headers: {
