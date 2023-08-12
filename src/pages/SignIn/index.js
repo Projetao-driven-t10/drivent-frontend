@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
+import { AiFillGithub } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 
 import AuthLayout from '../../layouts/Auth';
@@ -37,6 +38,19 @@ export default function SignIn() {
       toast('Não foi possível fazer o login!');
     }
   } 
+  function redirectGitHub() {
+    const GITHUB_URL = 'https://github.com/login/oauth/authorize';
+    const CLIENT_ID = 'f86930e0554bb54e190d';
+    const params = new URLSearchParams({
+      response_type: 'code',
+      scope: 'user',
+      client_id: CLIENT_ID,
+      redirect_uri: 'http://localhost:3000/auth/github/callback'
+    });
+
+    const authURL = `${GITHUB_URL}?${params.toString()}`;
+    window.location.href = authURL;
+  }
 
   return (
     <AuthLayout background={eventInfo.backgroundImageUrl}>
@@ -51,6 +65,9 @@ export default function SignIn() {
           <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
           <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>Entrar</Button>
         </form>
+        <Button onClick={redirectGitHub}>
+          <AiFillGithub /> Entre com GitHub
+        </Button>
       </Row>
       <Row>
         <Link to="/enroll">Não possui login? Inscreva-se</Link>

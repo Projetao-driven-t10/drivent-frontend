@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import Countdown from './pages/Countdown';
@@ -20,6 +15,7 @@ import { EventInfoProvider } from './contexts/EventInfoContext';
 import { UserProvider } from './contexts/UserContext';
 
 import useToken from './hooks/useToken';
+import GitHubAuthExchange from './pages/Oauth';
 
 export default function App() {
   return (
@@ -32,7 +28,7 @@ export default function App() {
               <Route path="/" element={<Countdown />} />
               <Route path="/enroll" element={<Enroll />} />
               <Route path="/sign-in" element={<SignIn />} />
-
+              <Route path="/auth/github/callback" element={<GitHubAuthExchange />} />
               <Route
                 path="/dashboard"
                 element={
@@ -63,7 +59,5 @@ function ProtectedRouteGuard({ children }) {
     return <Navigate to="/sign-in" />;
   }
 
-  return <>
-    {children}
-  </>;
+  return <>{children}</>;
 }
