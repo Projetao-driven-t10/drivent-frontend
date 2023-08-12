@@ -3,6 +3,7 @@ import { Description, Title } from './style';
 import api from '../../../services/api';
 import useToken from '../../../hooks/useToken';
 import DaysButtonList from './components/daysButtons';
+import ContainerActivities from './components/containerActivities';
 
 export default function Activities() {
   const [daysList, setDaysList] = React.useState([]);
@@ -24,16 +25,17 @@ export default function Activities() {
       });
   }, [activitiesByDay]);
 
-  if(daysList === undefined) return <>Não há atividades cadastradas</>;
+  if(daysList.length === 0) return <>Não há atividades cadastradas</>;
 
   return (
     <>
       <Title>Escolha de atividades</Title>
-      <Description hotelAlreadySelected={false}>Primeiro, filtre pelo dia do evento:</Description>
+      <Description hotelAlreadySelected={true}>Primeiro, filtre pelo dia do evento:</Description>
       <DaysButtonList 
         daysList={daysList}
         setActivitiesByDay={setActivitiesByDay}
       ></DaysButtonList>
+      <ContainerActivities activitiesByDay={activitiesByDay}/>
     </>
   );
 }
