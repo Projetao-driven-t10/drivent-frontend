@@ -16,6 +16,7 @@ export default function Button({ day, setActivitiesByDay, id, token, selected, s
   const [dateDay, setDateDay] = React.useState(`${formatedDay.getDate() + 1}/${formatedMonth}`);
 
   function getActivitiesByDay() {
+    // console.log(localStorage.getItem(TICKET_ID));
     setButtonSelected({ day: day });
     api.get(`/activities/${dayOfButton}`, {
       headers: {

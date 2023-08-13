@@ -20,6 +20,16 @@ export async function makePayment(body, token) {
   return response.data;
 }
 
+export async function getPayment(ticketId, token) {
+  const response = await api.get(`/payments?ticketId=${ticketId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
+
 // export async function getPersonalInformations(token) {
 // const response = await api.get('/enrollments', {
 //     headers: {

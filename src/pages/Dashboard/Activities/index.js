@@ -4,15 +4,18 @@ import api from '../../../services/api';
 import useToken from '../../../hooks/useToken';
 import DaysButtonList from './components/daysButtons';
 import ContainerActivities from './components/containerActivities';
+import { useContext } from 'react';
+import PaymentInfoContext from '../../../contexts/PaymentContext';
+import { getPayment } from '../../../services/paymentApi';
 
 export default function Activities() {
+  const PaymentContext = useContext(PaymentInfoContext);
   const [daysList, setDaysList] = React.useState([]);
   const [buttonSelected, setButtonSelected] = React.useState({ day: '' });
   // atividades que serão listadas no quadro
   const [activitiesByDay, setActivitiesByDay] = React.useState([]);
   const token = useToken();
   useEffect(() => {
-    console.log(activitiesByDay);
     api.get('/activities', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -26,6 +29,8 @@ export default function Activities() {
       });
   }, [activitiesByDay]);
 
+  if(PaymentContext.paymentData.typeSelected?.isRemote) return <>Sua modalidade de ingresso não precisa escolher as atividade. Voce terá acesso a todas as atividades</>;
+  if(!PaymentContext.paymentData) return <>Voce precisa ter realizado o pagamento antes de fazer a escolha de atividades</>;
   if(daysList.length === 0) return <>Não há atividades cadastradas</>;
 
   return (

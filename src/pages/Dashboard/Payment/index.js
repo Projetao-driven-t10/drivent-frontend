@@ -10,7 +10,11 @@ import { InputWrapper } from '../../../components/PersonalInformationForm/InputW
 import Input from '../../../components/Form/Input';
 import { toast } from 'react-toastify';
 import { makePayment, reserveTicket } from '../../../services/paymentApi';
+import PaymentInfoContext from '../../../contexts/PaymentContext';
+import { useContext } from 'react';
+
 export default function Payment() {
+  const PaymentContext = useContext(PaymentInfoContext);
   const [ticketReserved, setTicketReserved] = React.useState({});
   const token = useToken();
   const [ticketsType, setTicketsType] = React.useState([]);
@@ -34,6 +38,7 @@ export default function Payment() {
   }
 
   useEffect(() => {
+    console.log(PaymentContext);
     if(enrollmentData) {
       setSavedEnrollment(true);
     }else {
@@ -151,6 +156,7 @@ export default function Payment() {
         <Button show={show} onClick={() => {
           const body = {
             ticketId: ticketReserved.id,
+            typeSelected: typeSelected,
             cardData: {
               issuer: data.issuer,
               number: data.cardNumber,
@@ -159,8 +165,11 @@ export default function Payment() {
               cvv: data.cvc
             }         
           };
+          
           makePayment(body, token)
-            .then(() => {
+            .then(() => { 
+              PaymentContext.setPaymentData(body);
+              // localStorage.setItem(TICKET_ID, ticketReserved.id);
               setShow('confirmação');
               toast('Pagamento feito com sucesso!');
             })
