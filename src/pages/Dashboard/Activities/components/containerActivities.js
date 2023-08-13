@@ -9,9 +9,8 @@ export default function ContainerActivities({ activitiesByDay }) {
     const groupedActivities = getActivitiesPlaces(activitiesByDay);
     setPlaces(groupedActivities);
   }, [activitiesByDay]);
-  function activityHasVacancies(a) {
-    if (a.vacancies === a.Subscription.length) return false;
-    if (a.vacancies > a.Subscription.length) return true;
+  function vacancies(a) {
+    return a.vacancies - a.Subscription.length;
   }
 
   function countActivityHours(a) {
@@ -56,7 +55,7 @@ export default function ContainerActivities({ activitiesByDay }) {
                 name={activity.name}
                 start={activity.start}
                 end={activity.end}
-                activityHasVacancies={activityHasVacancies(activity)}
+                vacancies={vacancies(activity)}
                 activityHours={countActivityHours(activity)}
               />
             ))}
@@ -79,10 +78,10 @@ width: 288px;
 // background: yellow;
 `;
 const Title = styled.h2`
-width: 139px;
+width: 170px;
 height: 20px;
 position: absolute;
-top: 10px;
+top: -10px;
 left: 70px;
 // background: pink;
 font-family: Roboto;
