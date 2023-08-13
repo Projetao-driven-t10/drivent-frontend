@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { useContext } from 'react';
 import Activity from './activity';
+import UserContext from '../../../../contexts/UserContext';
 export default function ContainerActivities({ activitiesByDay }) {
   const [places, setPlaces] = React.useState([]);
+  const user = useContext(UserContext);
 
   React.useEffect(() => {
     const groupedActivities = getActivitiesPlaces(activitiesByDay);
@@ -52,11 +54,13 @@ export default function ContainerActivities({ activitiesByDay }) {
             {places[place].map(activity => (
               <Activity
                 key={activity.id}
+                id={activity.id}
                 name={activity.name}
                 start={activity.start}
                 end={activity.end}
                 vacancies={vacancies(activity)}
                 activityHours={countActivityHours(activity)}
+                subscription={activity.Subscription.find(s => s.userId === user.userData.user.id)}
               />
             ))}
           </SubContainer>
