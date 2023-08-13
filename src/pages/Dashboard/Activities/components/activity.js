@@ -2,14 +2,27 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-export default function Activity({ name, start, end, vacancies, activityHours }) {
-  // de acordo com a requisição feita para inscrever a pessoa na atividade, usar o IconV se der certo
-  // de acordo com a função do activityhasvacancies, usar o IconX se for false
+import { BiExit } from 'react-icons/bi';
+import { createActivitySubscription } from '../../../../services/activityApi';
+import useToken from '../../../../hooks/useToken';
+import React from 'react';
+import { toast } from 'react-toastify';
+export default function Activity({ name, start, end, vacancies, id, activityHours, subscription }) {
   const startTime = dayjs(start).add(3, 'hour').format('HH:mm');
   const endTime = dayjs(end).add(3, 'hour').format('HH:mm');
+  const [iconSubscription, setIconSubscription] = React.useState(false);
+  const token = useToken();
+  function handleSubscription(id) {
+    createActivitySubscription({ activityId: id }, token)
+      .then (() => setIconSubscription(true))
+      .catch((error) => {
+        console.log(error);
+        toast.error('This activity has a time overlap with an existing activity subscription!');
+      });
+  }
 
   return (
-    <Container activityHours={activityHours}>
+    <Container activityHours={activityHours} iconSubscription={iconSubscription} subscription={subscription}>
       <SubContainer>
         <Name>{name}</Name>
         <Time>{startTime} - {endTime}</Time>
@@ -18,9 +31,9 @@ export default function Activity({ name, start, end, vacancies, activityHours })
       <Separator/>
       
       <SubContainerB>
-        {vacancies <= 0 ? <IconX/>:<IconV/>}
+        {vacancies <= 0 ? (<IconX/>) : (iconSubscription || subscription !== undefined ? <IconV/> : <IconSubscription onClick={() => handleSubscription(id)}/>)}
         <Text activityHasVacancies={vacancies}>
-          {vacancies <= 0 ? 'Esgotado':`${vacancies} vagas`}
+          {vacancies <= 0 ? 'Esgotado':(iconSubscription || subscription !== undefined ? 'Inscrito' : `${vacancies} vagas`)}
         </Text>
       </SubContainerB>
     </Container>
@@ -46,7 +59,7 @@ const Container = styled.div`
 box-sizing: border-box;
 height: ${props => 70 * props.activityHours}px;
 width: 265px;
-background-color: #F1F1F1;
+background-color: ${props => props.iconSubscription || props.subscription !== undefined ? '#D0FFDB' : '#F1F1F1'};
 border-radius: 5px;
 margin-bottom: 10px;
 padding: 10px;
@@ -90,6 +103,12 @@ const IconX = styled(AiOutlineCloseCircle)`
 width: 20px;
 height: 20px;
 color: #CC6666;
+`;
+
+const IconSubscription = styled(BiExit)`
+width: 20px;
+height: 20px;
+color: #078632;
 `;
 
 const Text = styled.p`
