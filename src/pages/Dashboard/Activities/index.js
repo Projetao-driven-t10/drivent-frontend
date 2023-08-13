@@ -7,6 +7,7 @@ import ContainerActivities from './components/containerActivities';
 
 export default function Activities() {
   const [daysList, setDaysList] = React.useState([]);
+  const [buttonSelected, setButtonSelected] = React.useState({ day: '' });
   // atividades que serão listadas no quadro
   const [activitiesByDay, setActivitiesByDay] = React.useState([]);
   const token = useToken();
@@ -30,8 +31,10 @@ export default function Activities() {
   return (
     <>
       <Title>Escolha de atividades</Title>
-      <Description hotelAlreadySelected={true}>Primeiro, filtre pelo dia do evento:</Description>
+      <Description hotelAlreadySelected={buttonSelected.day === '' ? true : false}>Primeiro, filtre pelo dia do evento:</Description>
       <DaysButtonList 
+        buttonSelected={buttonSelected}
+        setButtonSelected={setButtonSelected}
         daysList={daysList}
         setActivitiesByDay={setActivitiesByDay}
       ></DaysButtonList>
