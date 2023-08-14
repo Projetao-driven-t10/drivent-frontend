@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import useToken from '../../../../hooks/useToken';
 import api from '../../../../services/api';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Button from './button';
 
 const weekDays = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
-export default function DaysButtonList({ daysList, setActivitiesByDay }) {
+export default function DaysButtonList({ daysList, setActivitiesByDay, buttonSelected, setButtonSelected }) {
   const token = useToken();
   function getActivitiesByDay(day) {
     useEffect(() => {
@@ -36,6 +36,8 @@ export default function DaysButtonList({ daysList, setActivitiesByDay }) {
             id={index}
             setActivitiesByDay={setActivitiesByDay}
             token={token}
+            selected={buttonSelected.day === day.day ? true : false}
+            setButtonSelected={setButtonSelected}
           ></Button>
         );
       })}

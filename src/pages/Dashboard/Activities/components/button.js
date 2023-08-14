@@ -7,7 +7,7 @@ import React from 'react';
 
 const weekDays = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
-export default function Button({ day, setActivitiesByDay, id, token }) {
+export default function Button({ day, setActivitiesByDay, id, token, selected, setButtonSelected }) {
   const [dayOfButton, setDay] = React.useState(day);
   const formatedDay = (new Date(day));
   const formatedMonth = dayjs(day).format('MM');
@@ -16,6 +16,8 @@ export default function Button({ day, setActivitiesByDay, id, token }) {
   const [dateDay, setDateDay] = React.useState(`${formatedDay.getDate() + 1}/${formatedMonth}`);
 
   function getActivitiesByDay() {
+    // console.log(localStorage.getItem(TICKET_ID));
+    setButtonSelected({ day: day });
     api.get(`/activities/${dayOfButton}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -32,6 +34,7 @@ export default function Button({ day, setActivitiesByDay, id, token }) {
 
   return (
     <ButtonContainer 
+      selected={selected}
       onClick={() => getActivitiesByDay(day)} 
       key={id}
     >{ weekDays[weekPosition] }, { dateDay }
@@ -40,7 +43,8 @@ export default function Button({ day, setActivitiesByDay, id, token }) {
 }
 
 const ButtonContainer = styled.div`
-  background-color: lightgray;
+  background-color: ${(props) => props.selected ? '#FFD37D' : 'lightgray'};
   padding: 12px;
   border-radius: 12px;
+  
 `;
