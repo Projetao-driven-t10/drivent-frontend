@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { useContext } from 'react';
 import Activity from './activity';
+import UserContext from '../../../../contexts/UserContext';
 export default function ContainerActivities({ activitiesByDay }) {
   const [places, setPlaces] = React.useState([]);
+  const user = useContext(UserContext);
 
   React.useEffect(() => {
     const groupedActivities = getActivitiesPlaces(activitiesByDay);
     setPlaces(groupedActivities);
   }, [activitiesByDay]);
-  function activityHasVacancies(a) {
-    if (a.vacancies === a.Subscription.length) return false;
-    if (a.vacancies > a.Subscription.length) return true;
+  function vacancies(a) {
+    return a.vacancies - a.Subscription.length;
   }
 
   function countActivityHours(a) {
@@ -53,11 +54,13 @@ export default function ContainerActivities({ activitiesByDay }) {
             {places[place].map(activity => (
               <Activity
                 key={activity.id}
+                id={activity.id}
                 name={activity.name}
                 start={activity.start}
                 end={activity.end}
-                activityHasVacancies={activityHasVacancies(activity)}
+                vacancies={vacancies(activity)}
                 activityHours={countActivityHours(activity)}
+                subscription={activity.Subscription.find(s => s.userId === user.userData.user.id)}
               />
             ))}
           </SubContainer>
@@ -79,10 +82,10 @@ width: 288px;
 // background: yellow;
 `;
 const Title = styled.h2`
-width: 139px;
+width: 170px;
 height: 20px;
 position: absolute;
-top: 10px;
+top: -10px;
 left: 70px;
 // background: pink;
 font-family: Roboto;
