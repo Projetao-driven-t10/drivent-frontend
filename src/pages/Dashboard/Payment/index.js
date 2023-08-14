@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { makePayment, reserveTicket } from '../../../services/paymentApi';
 import PaymentInfoContext from '../../../contexts/PaymentContext';
 import { useContext } from 'react';
+import { styled } from '@material-ui/core';
 
 export default function Payment() {
   const PaymentContext = useContext(PaymentInfoContext);

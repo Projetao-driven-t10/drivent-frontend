@@ -7,6 +7,7 @@ import ContainerActivities from './components/containerActivities';
 import { useContext } from 'react';
 import PaymentInfoContext from '../../../contexts/PaymentContext';
 import { getPayment } from '../../../services/paymentApi';
+import styled from 'styled-components';
 
 export default function Activities() {
   const PaymentContext = useContext(PaymentInfoContext);
@@ -29,9 +30,9 @@ export default function Activities() {
       });
   }, [activitiesByDay]);
 
-  if(PaymentContext.paymentData.typeSelected?.isRemote) return <>Sua modalidade de ingresso não precisa escolher as atividade. Voce terá acesso a todas as atividades</>;
-  if(!PaymentContext.paymentData) return <>Voce precisa ter realizado o pagamento antes de fazer a escolha de atividades</>;
-  if(daysList.length === 0) return <>Não há atividades cadastradas</>;
+  if(PaymentContext.paymentData.typeSelected?.isRemote) return <Warning>Sua modalidade de ingresso não precisa escolher as atividade. Voce terá acesso a todas as atividades</Warning>;
+  if(!PaymentContext.paymentData) return <Warning>Voce precisa ter realizado o pagamento antes de fazer a escolha de atividades</Warning>;
+  if(daysList.length === 0) return <Warning>Não há atividades cadastradas</Warning>;
 
   return (
     <>
@@ -47,3 +48,18 @@ export default function Activities() {
     </>
   );
 }
+
+const Warning = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 23px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #8E8E8E;
+  width: 100%;
+  height: 100%;
+`;
