@@ -77,7 +77,7 @@ justify-content: space-between;
 align-items: center;
 padding: 15px;
 margin-top: 13px;
-background-color: ${props => props.isSelected ? '#FFEED2' : '#fff'};
+background-color: ${props => props.isAvailable ? (props.isSelected ? '#FFEED2' : '#fff') :  'lightgrey'};
 `;
 export const PersonIcon = styled.span`
 width: 27px;

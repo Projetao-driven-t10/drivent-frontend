@@ -92,6 +92,7 @@ export default function Hotel() {
             image={h.image}
             roomsCapacity={typeOfHotelRooms(h.Rooms)}
             rooms={h.Rooms}
+            booking={h.Rooms.Booking}
             setDisplayRooms={setDisplayRooms}
             setBedrooms={setBedrooms}
             isSelected={selectedHotelId === h.id}
@@ -115,6 +116,7 @@ export default function Hotel() {
               setSelectedIconIndex={setSelectedIconIndex}
               setDisplayButton={setDisplayButton}
               setSelectedRoom={setSelectedRoom}
+              booking={bed.Booking}
             />)}
           </div>
           <Button

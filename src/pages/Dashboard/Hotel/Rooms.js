@@ -1,16 +1,17 @@
-import { BsPerson } from 'react-icons/bs';
+import { BsPerson, BsPersonFill } from 'react-icons/bs';
 import { Habitation, PersonIcon, SelectedPersonIcon } from './style';
 
-export default function Rooms({ id, name, capacity, vacancy, isSelected, setSelectedRoomId, selectedRoomId, selectedIconIndex, setSelectedIconIndex, setDisplayButton, setSelectedRoom }) {
+export default function Rooms({ id, name, capacity, vacancy, isSelected, setSelectedRoomId, selectedRoomId, selectedIconIndex, setSelectedIconIndex, setDisplayButton, setSelectedRoom, booking }) {
   function handleChoice(id, icon) {
     if(selectedIconIndex === icon && selectedRoomId === id) return;
     setSelectedIconIndex(icon);
     setSelectedRoomId(id);
     setSelectedRoom({ name, capacity });
     setDisplayButton(true);
+    console.log(booking);
   };
   return (
-    <Habitation isSelected={isSelected} >
+    <Habitation isSelected={isSelected} isAvailable={booking.length !== capacity} >
       <span>
         {name}
       </span>
@@ -20,9 +21,10 @@ export default function Rooms({ id, name, capacity, vacancy, isSelected, setSele
             key={i}
             selected={selectedIconIndex === i} 
             onClick={() => handleChoice(id, i)}>
-            {selectedIconIndex === v && selectedRoomId === id ? <SelectedPersonIcon /> : <BsPerson />}
+            {booking.length === capacity ? ( <BsPersonFill />) : (selectedIconIndex === v && selectedRoomId === id ? <SelectedPersonIcon /> : <BsPerson />)}
           </PersonIcon>)}
       </span>
     </Habitation>
   );
 };
+//booking.length > 0 ? (booking.length === capacity ? (<BsPersonFill />) : )
