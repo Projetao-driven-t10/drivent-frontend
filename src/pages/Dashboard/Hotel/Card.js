@@ -1,9 +1,10 @@
 import { Card } from './style';
 
-export default function HotelCard({ id, name, image, rooms, roomsCapacity, setDisplayRooms, setBedrooms, isSelected, setSelectedHotelId }) {
+export default function HotelCard({ id, name, image, rooms, roomsCapacity, setDisplayRooms, setBedrooms, isSelected, setSelectedHotelId, setSelectedHotel }) {
   function chooseHotel(id) {
     setSelectedHotelId(id);
     setBedrooms(rooms);
+    setSelectedHotel({ name, image });
     setDisplayRooms(true);
   }
   return (
