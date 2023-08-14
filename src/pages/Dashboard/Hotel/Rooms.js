@@ -1,11 +1,12 @@
 import { BsPerson } from 'react-icons/bs';
 import { Habitation, PersonIcon, SelectedPersonIcon } from './style';
 
-export default function Rooms({ id, name, capacity, vacancy, isSelected, setSelectedRoomId, selectedRoomId, selectedIconIndex, setSelectedIconIndex, setDisplayButton }) {
+export default function Rooms({ id, name, capacity, vacancy, isSelected, setSelectedRoomId, selectedRoomId, selectedIconIndex, setSelectedIconIndex, setDisplayButton, setSelectedRoom }) {
   function handleChoice(id, icon) {
     if(selectedIconIndex === icon && selectedRoomId === id) return;
     setSelectedIconIndex(icon);
     setSelectedRoomId(id);
+    setSelectedRoom({ name, capacity });
     setDisplayButton(true);
   };
   return (
